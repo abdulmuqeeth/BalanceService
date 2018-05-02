@@ -3,14 +3,14 @@ package abdulmuqeeth.uic.com.balancecommon;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class DailyCash implements Parcelable {
+public class DailyCash implements Parcelable {
     int mDay = 25 ;
     int mMonth = 4 ;
     int mYear = 2018 ;
     int mCash = 8988 ;
     String mDayOfWeek = "Wednesday" ;
 
-    public DailyCash(int mYear, int mMonth, int mDate, String mDayOfWeek, int mCash ) {
+    public DailyCash(int mYear, int mMonth, int mDay, String mDayOfWeek, int mCash ) {
         this.mDay = mDay;
         this.mMonth = mMonth;
         this.mYear = mYear;
@@ -48,6 +48,22 @@ class DailyCash implements Parcelable {
 
     public int describeContents()  {
         return 0 ;
+    }
+
+    public int getmDay() {
+        return mDay;
+    }
+
+    public int getmMonth() {
+        return mMonth;
+    }
+
+    public int getmYear() {
+        return mYear;
+    }
+
+    public int getmCash() {
+        return mCash;
     }
 
 }

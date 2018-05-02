@@ -7,5 +7,5 @@ import abdulmuqeeth.uic.com.balancecommon.DailyCash;
 
 interface Balance {
     boolean createDatabase();
-    List<DailyCash> dailyCash(int day, int month, int year , int range);
+    DailyCash[] dailyCash(int day, int month, int year , int range);
 }
