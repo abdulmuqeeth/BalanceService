@@ -87,7 +87,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Log.i(getClass().toString(), "Skipped Bad Row");
                     continue;
                 }
-                // new contentvalue(3)
                 ContentValues mContentValue = new ContentValues();
                 mContentValue.put(YEAR, columns[0].trim());
                 mContentValue.put(MONTH, columns[1].trim());
@@ -105,7 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.endTransaction();
         Log.i(getClass().toString(),"Database Created");
 
-        String selectQuery = "Select * from "+TABLE_NAME+" where "+DAY+"=? ";
+        /*String selectQuery = "Select * from "+TABLE_NAME+" where "+DAY+"=? ";
 
         Cursor cursor = db.rawQuery(selectQuery, new String[] {"Monday"});
 
@@ -113,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.i("Checking DB", ""+cursor.getInt(0)+" "+cursor.getInt(1)+" "+cursor.getInt(2)+" "+cursor.getInt(3)+" "+cursor.getString(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6));
         }
 
-        cursor.close();
+        cursor.close();*/
 
         return true;
     }
@@ -168,15 +167,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         DailyCash[] retrievedData = new DailyCash[newCursor.getCount()];
 
-        if(newCursor.moveToFirst()) {
-            do {
-                Log.i("Checking DB 2 for 900:", "i="+i+" "+newCursor.getInt(0)+" "+newCursor.getInt(1)+" "+newCursor.getInt(2)+" "+newCursor.getInt(3)+" "+newCursor.getString(4)+" "+newCursor.getInt(5)+" "+newCursor.getInt(6));
-                DailyCash dailyCash = new DailyCash(newCursor.getInt(1), newCursor.getInt(2), newCursor.getInt(3), newCursor.getString(4), newCursor.getInt(6));
-                retrievedData[i] = dailyCash;
-                i++;
-            } while (newCursor.moveToNext());
+        //Making the service api thread safe
+        synchronized(retrievedData) {
+            if(newCursor.moveToFirst()) {
+                do {
+                    Log.i("Checking DB 2 for 900:", "i="+i+" "+newCursor.getInt(0)+" "+newCursor.getInt(1)+" "+newCursor.getInt(2)+" "+newCursor.getInt(3)+" "+newCursor.getString(4)+" "+newCursor.getInt(5)+" "+newCursor.getInt(6));
+                    DailyCash dailyCash = new DailyCash(newCursor.getInt(1), newCursor.getInt(2), newCursor.getInt(3), newCursor.getString(4), newCursor.getInt(6));
+                    retrievedData[i] = dailyCash;
+                    i++;
+                } while (newCursor.moveToNext());
 
-            Log.i("counter", ""+i);
+                Log.i("counter", ""+i);
+            }
         }
 
         return retrievedData;

@@ -8,29 +8,28 @@ import android.os.RemoteException;
 
 import java.util.List;
 
-import abdulmuqeeth.uic.com.balancecommon.Balance;
+import abdulmuqeeth.uic.com.balancecommon.BalanceService;
 import abdulmuqeeth.uic.com.balancecommon.DailyCash;
 
-public class BalanceImpl extends Service {
+public class BalanceServiceImpl extends Service {
 
     private DatabaseHelper dbHelper = new DatabaseHelper(this);
 
     Context mContext = this;
-    private final Balance.Stub mBinder = new Balance.Stub() {
+    private final BalanceService.Stub mBinder = new BalanceService.Stub() {
+
         @Override
         public boolean createDatabase() throws RemoteException {
             return dbHelper.loadData();
-            //return new DatabaseHelper(mContext).loadData();
         }
 
         @Override
         public DailyCash[] dailyCash(int day, int month, int year, int range) throws RemoteException {
             return dbHelper.getData(day,month,year,range);
-            //return new DatabaseHelper(mContext).getData(day, month, year, range);
         }
     };
 
-    public BalanceImpl() {
+    public BalanceServiceImpl() {
     }
 
     @Override

@@ -29,12 +29,12 @@
         </activity>
 
         <service
-            android:name=".BalanceImpl"
+            android:name=".BalanceServiceImpl"
             android:enabled="true"
             android:exported="true"
             android:permission="abdulmuqeeth.uic.com.balanceservice.perm">
             <intent-filter>
-                <action android:name="abdulmuqeeth.uic.com.balancecommon.Balance" />
+                <action android:name="abdulmuqeeth.uic.com.balancecommon.BalanceService" />
             </intent-filter>
         </service>
 
